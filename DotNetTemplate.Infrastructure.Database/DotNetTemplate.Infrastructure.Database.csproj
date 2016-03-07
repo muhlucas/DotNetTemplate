@@ -41,18 +41,24 @@
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\Configuration\BaseEntityConfiguration.cs" />
     <Compile Include="Context\TemplateContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Context\Configuration\" />
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\DotNetTemplate.Domain\DotNetTemplate.Domain.csproj">
+      <Project>{f48e9e25-c21e-4d4b-9c28-bf2bed3dea90}</Project>
+      <Name>DotNetTemplate.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
