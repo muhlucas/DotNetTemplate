@@ -29,7 +29,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
         public async virtual Task AddAsync(TEntity obj)
         {
             Connection.Set<TEntity>().Add(obj);
-            Connection.SaveChanges();
+            await Connection.SaveChangesAsync();
         }
 
         public virtual void Update(TEntity obj)
@@ -43,7 +43,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
         {
             obj.UpdatedAt = DateTime.Now;
             Connection.Entry(obj).State = EntityState.Modified;
-            Connection.SaveChanges();
+            await Connection.SaveChangesAsync();
         }
 
         public virtual void Remove(TEntity obj)
@@ -57,7 +57,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
         {
             Connection.Entry(obj).State = EntityState.Deleted;
             Connection.Set<TEntity>().Remove(obj);
-            Connection.SaveChanges();
+            await Connection.SaveChangesAsync();
         }
 
         public TEntity GetById(long id)
@@ -67,7 +67,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
 
         public async Task<TEntity> GetByIdAsync(long id)
         {
-            return Connection.Set<TEntity>().Find(id);
+            return await Connection.Set<TEntity>().FindAsync(id);
         }
 
         public TEntity GetById(Expression<Func<TEntity, bool>> predicate, params string[] includes)
@@ -83,7 +83,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
             IQueryable<TEntity> query = Connection.Set<TEntity>();
             if (includes != null && includes.Length > 0)
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
-            return query.FirstOrDefault(predicate);
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
         public virtual IEnumerable<TEntity> GetAll(params string[] includes)
@@ -99,7 +99,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
             IQueryable<TEntity> query = Connection.Set<TEntity>();
             if (includes != null && includes.Length > 0)
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
         public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
@@ -125,8 +125,8 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
             query = reverse ? order == null ? query.OrderBy(x => x.Id) : query.OrderBy(order) :
                               order == null ? query.OrderByDescending(x => x.Id) : query.OrderByDescending(order);
 
-            return (skipRecords == 0 && takeRecords == 0 ? query :
-                query.Skip(skipRecords).Take(takeRecords)).ToList();
+            return await (skipRecords == 0 && takeRecords == 0 ? query :
+                query.Skip(skipRecords).Take(takeRecords)).ToListAsync();
         }
 
         public IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
