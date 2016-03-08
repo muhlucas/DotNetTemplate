@@ -1,0 +1,12 @@
+# Build results
+
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+bin/
+obj/
+.vs/
+
+# NuGet Packages
+packages
