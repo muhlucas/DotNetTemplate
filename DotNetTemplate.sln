@@ -3,19 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Presentation", "0-Presentation", "{29607E75-F12D-46D8-AE24-7CF4C0E41E38}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Domain", "2-Domain", "{56964CD9-3F58-4A7E-9AA4-DA6BBC170142}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Infrastructure", "3-Infrastructure", "{5FAF75E9-6758-4B54-A04B-1DC2BC278EDA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1-Database", "3.1-Database", "{4B8749CF-8B82-45E5-9CA2-27EFC75992BB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.Domain", "DotNetTemplate.Domain\DotNetTemplate.Domain.csproj", "{F48E9E25-C21E-4D4B-9C28-BF2BED3DEA90}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.Infrastructure.Database", "DotNetTemplate.Infrastructure.Database\DotNetTemplate.Infrastructure.Database.csproj", "{3F04DDB7-3D0D-4418-9617-9F3D5013BC35}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Application", "1-Application", "{7D22A8A5-E041-4842-9578-39098FA808FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.Application", "DotNetTemplate.Application\DotNetTemplate.Application.csproj", "{3D3509B8-D6E4-4A48-81D5-0916B407A28C}"
 EndProject
@@ -46,12 +36,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4B8749CF-8B82-45E5-9CA2-27EFC75992BB} = {5FAF75E9-6758-4B54-A04B-1DC2BC278EDA}
-		{F48E9E25-C21E-4D4B-9C28-BF2BED3DEA90} = {56964CD9-3F58-4A7E-9AA4-DA6BBC170142}
-		{3F04DDB7-3D0D-4418-9617-9F3D5013BC35} = {4B8749CF-8B82-45E5-9CA2-27EFC75992BB}
-		{3D3509B8-D6E4-4A48-81D5-0916B407A28C} = {7D22A8A5-E041-4842-9578-39098FA808FC}
-		{FA27711F-6B6D-48FD-9CA9-CEA81FD7E77D} = {29607E75-F12D-46D8-AE24-7CF4C0E41E38}
 	EndGlobalSection
 EndGlobal
