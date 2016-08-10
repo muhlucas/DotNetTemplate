@@ -8,5 +8,3 @@ bin/
 obj/
 .vs/
 
-# NuGet Packages
-packages

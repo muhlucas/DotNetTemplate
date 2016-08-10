@@ -12,7 +12,7 @@ namespace DotNetTemplate.Application.Configuration
         {
             builder.RegisterGeneric(typeof(ServiceBase<>)).As(typeof(IServiceBase<>)).InstancePerDependency();
             builder.RegisterGeneric(typeof(RepositoryBase<>)).As(typeof(IRepositoryBase<>)).InstancePerDependency();
-            //builder.RegisterType<Example>().As<IExample>().PropertiesAutowired().InstancePerRequest();
+            //builder.RegisterType<Example>().As<IExample>().InstancePerRequest();
 
             IContainer container = builder.Build();
             return container;

@@ -20,70 +20,93 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
             Connection = context;
         }
 
-        public async virtual Task AddAsync(TEntity obj)
+        public virtual void Add(TEntity obj)
         {
             Connection.Set<TEntity>().Add(obj);
-            await Connection.SaveChangesAsync();
+            Connection.SaveChanges();
         }
 
-        public async virtual Task UpdateAsync(TEntity obj)
+        public virtual void Update(TEntity obj)
         {
             obj.UpdatedAt = DateTime.Now;
             Connection.Entry(obj).State = EntityState.Modified;
-            await Connection.SaveChangesAsync();
+            Connection.SaveChanges();
         }
 
-        public async virtual Task RemoveAsync(TEntity obj)
+        public virtual void Remove(TEntity obj)
         {
             Connection.Entry(obj).State = EntityState.Deleted;
             Connection.Set<TEntity>().Remove(obj);
-            await Connection.SaveChangesAsync();
+            Connection.SaveChanges();
         }
 
-        public async Task<TEntity> GetByIdAsync(long id)
+        public virtual TEntity GetById(long id, bool lazyLoadEnabled = true)
         {
-            return await Connection.Set<TEntity>().FindAsync(id);
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
+            return Connection.Set<TEntity>().Find(id);
         }
 
-        public async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> predicate, params string[] includes)
+        public virtual TEntity GetById(Guid id, bool lazyLoadEnabled = true)
         {
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
+            return Connection.Set<TEntity>().Find(id);
+        }
+
+        public virtual TEntity GetByExpression(Expression<Func<TEntity, bool>> predicate,
+            bool lazyLoadEnabled = true, params string[] includes)
+        {
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
             IQueryable<TEntity> query = Connection.Set<TEntity>();
-            if (includes != null && includes.Length > 0)
+
+            if (includes != null && includes.Length > 0 && !String.IsNullOrEmpty(includes.First()))
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
-            return await query.FirstOrDefaultAsync(predicate);
+
+            return query.FirstOrDefault(predicate);
+
         }
 
-        public async virtual Task<IEnumerable<TEntity>> GetAllAsync(params string[] includes)
+        public virtual IEnumerable<TEntity> GetAll(bool lazyLoadEnabled = true, params string[] includes)
         {
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
             IQueryable<TEntity> query = Connection.Set<TEntity>();
-            if (includes != null && includes.Length > 0)
+
+            if (includes != null && includes.Length > 0 && !String.IsNullOrEmpty(includes.First()))
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
-            return await query.ToListAsync();
+
+            return query.ToList();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
+        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null,
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes)
         {
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
             IQueryable<TEntity> query = Connection.Set<TEntity>();
-            if (includes != null && includes.Length > 0)
+
+            if (includes != null && includes.Length > 0 && !String.IsNullOrEmpty(includes.First()))
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
 
             query = query.Where(predicate ?? (x => true));
-            query = reverse ? order == null ? query.OrderBy(x => x.Id) : query.OrderBy(order) :
+            query = ascending ? order == null ? query.OrderBy(x => x.Id) : query.OrderBy(order) :
                               order == null ? query.OrderByDescending(x => x.Id) : query.OrderByDescending(order);
 
-            return await (skipRecords == 0 && takeRecords == 0 ? query :
-                query.Skip(skipRecords).Take(takeRecords)).ToListAsync();
+            return (skipRecords == 0 && takeRecords == 0 ? query :
+                query.Skip(skipRecords).Take(takeRecords)).ToList();
         }
 
-        public IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
+        public virtual IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null,
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes)
         {
+            Connection.Configuration.LazyLoadingEnabled = lazyLoadEnabled;
             IQueryable<TEntity> query = Connection.Set<TEntity>();
-            if (includes != null && includes.Length > 0)
+
+            if (includes != null && includes.Length > 0 && !String.IsNullOrEmpty(includes.First()))
                 Array.ForEach<String>(includes, x => { query = query.Include(x); });
 
             query = query.Where(predicate ?? (x => true));
             totalRecords = query.Count();
-            query = reverse ? order == null ? query.OrderBy(x => x.Id) : query.OrderBy(order) :
+            query = ascending ? order == null ? query.OrderBy(x => x.Id) : query.OrderBy(order) :
                               order == null ? query.OrderByDescending(x => x.Id) : query.OrderByDescending(order);
 
 
@@ -95,6 +118,7 @@ namespace DotNetTemplate.Infrastructure.Database.Repositories
         {
             Connection.Database.Connection.Close();
             GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }

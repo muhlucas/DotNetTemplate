@@ -1,13 +1,17 @@
-﻿using System;
+﻿using DotNetTemplate.Infrastructure.Database.Context.Configuration;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace DotNetTemplate.Infrastructure.Database.Context
 {
+    [DbConfigurationType(typeof(TemplateDatabaseConfiguration))]
     public class TemplateContext : DbContext, IDisposable
     {
         public TemplateContext(): base("name=Connection")
-        { }
+        {
+
+        }
         
         //public DbSet<Example> Example { get; set; }
 

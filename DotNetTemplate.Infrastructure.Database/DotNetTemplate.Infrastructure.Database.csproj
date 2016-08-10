@@ -45,12 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\Configuration\BaseEntityConfiguration.cs" />
+    <Compile Include="Context\Configuration\TemplateDatabaseConfiguration.cs" />
     <Compile Include="Context\TemplateContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

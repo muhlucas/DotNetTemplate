@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.Domain", "DotNetTemplate.Domain\DotNetTemplate.Domain.csproj", "{F48E9E25-C21E-4D4B-9C28-BF2BED3DEA90}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.Application", "DotNetTemplate.Application\DotNetTemplate.Application.csproj", "{3D3509B8-D6E4-4A48-81D5-0916B407A28C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate.MVC", "DotNetTemplate.MVC\DotNetTemplate.MVC.csproj", "{FA27711F-6B6D-48FD-9CA9-CEA81FD7E77D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Presentation", "1-Presentation", "{FBB86D84-345D-4A29-90D8-D45C5737916A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Application", "2-Application", "{483A85C2-34EF-4C92-9E85-44F8BD8A92D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Domain", "3-Domain", "{774E2C3A-E59F-450D-99A2-A84B530BB157}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Infrastructure", "4-Infrastructure", "{6EFA0D7F-A040-4CEE-8ADC-B58B66CDEB4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +44,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F48E9E25-C21E-4D4B-9C28-BF2BED3DEA90} = {774E2C3A-E59F-450D-99A2-A84B530BB157}
+		{3F04DDB7-3D0D-4418-9617-9F3D5013BC35} = {6EFA0D7F-A040-4CEE-8ADC-B58B66CDEB4B}
+		{3D3509B8-D6E4-4A48-81D5-0916B407A28C} = {483A85C2-34EF-4C92-9E85-44F8BD8A92D3}
+		{FA27711F-6B6D-48FD-9CA9-CEA81FD7E77D} = {FBB86D84-345D-4A29-90D8-D45C5737916A}
 	EndGlobalSection
 EndGlobal

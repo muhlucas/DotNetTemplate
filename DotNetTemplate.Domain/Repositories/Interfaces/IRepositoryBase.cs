@@ -8,22 +8,27 @@ namespace DotNetTemplate.Domain.Repositories.Interfaces
 {
     public interface IRepositoryBase<TEntity> where TEntity : BaseEntity
     {
-        Task AddAsync(TEntity obj);
+        void Add(TEntity obj);
 
-        Task UpdateAsync(TEntity obj);
-        
-        Task RemoveAsync(TEntity obj);
+        void Update(TEntity obj);
 
-        Task<TEntity> GetByIdAsync(long id);
+        void Remove(TEntity obj);
 
-        Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> predicate, params string[] includes);
-        
-        Task<IEnumerable<TEntity>> GetAllAsync(params string[] includes);
+        TEntity GetById(long id, bool lazyLoadEnabled = true);
 
-        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null,
-                    bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes);
+        TEntity GetById(Guid id, bool lazyLoadEnabled = true);
 
-        IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, object>> order = null,
-            bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes);
+        TEntity GetByExpression(Expression<Func<TEntity, bool>> predicate,
+            bool lazyLoadEnabled = true, params string[] includes);
+
+        IEnumerable<TEntity> GetAll(bool lazyLoadEnabled = true, params string[] includes);
+
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null,
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes);
+
+        IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null,
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes);
     }
 }

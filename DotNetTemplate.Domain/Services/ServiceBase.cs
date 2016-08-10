@@ -17,46 +17,55 @@ namespace DotNetTemplate.Domain.Services
             _repository = repository;
         }
 
-        public async void AddAsync(TEntity obj)
+        public void Add(TEntity obj)
         {
-            await _repository.AddAsync(obj);
+            obj.CreatedAt = DateTime.Now;
+            _repository.Add(obj);
         }
 
-        public async virtual void UpdateAsync(TEntity obj)
+        public void Update(TEntity obj)
         {
-            await _repository.UpdateAsync(obj);
+            obj.UpdatedAt = DateTime.Now;
+            _repository.Update(obj);
         }
 
-        public async void RemoveAsync(TEntity obj)
+        public void Remove(TEntity obj)
         {
-            await _repository.RemoveAsync(obj);
+            _repository.Remove(obj);
         }
 
-        public async Task<TEntity> GetByIdAsync(long id)
+        public TEntity GetById(long id, bool lazyLoadEnabled = true)
         {
-            return await _repository.GetByIdAsync(id);
+            return _repository.GetById(id, lazyLoadEnabled);
         }
 
-        public async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> predicate, params string[] includes)
+        public TEntity GetById(Guid id, bool lazyLoadEnabled = true)
         {
-            return await _repository.GetByIdAsync(predicate, includes);
+            return _repository.GetById(id, lazyLoadEnabled);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(params string[] includes)
+        public TEntity GetByExpression(Expression<Func<TEntity, bool>> predicate, bool lazyLoadEnabled = true, params string[] includes)
         {
-            return await _repository.GetAllAsync(includes);
+            return _repository.GetByExpression(predicate, lazyLoadEnabled, includes);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null,
-            Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
+        public IEnumerable<TEntity> GetAll(bool lazyLoadEnabled = true, params string[] includes)
         {
-            return await _repository.GetAllAsync(predicate, order, reverse, skipRecords, takeRecords, includes);
+            return _repository.GetAll(lazyLoadEnabled, includes);
+        }
+
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate = null,
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes)
+        {
+            return _repository.GetAll(predicate, order, ascending, skipRecords, takeRecords, lazyLoadEnabled, includes);
         }
 
         public IEnumerable<TEntity> GetAll(ref int totalRecords, Expression<Func<TEntity, bool>> predicate = null,
-          Expression<Func<TEntity, object>> order = null, bool reverse = false, int skipRecords = 0, int takeRecords = 0, params string[] includes)
+            Expression<Func<TEntity, object>> order = null, bool ascending = true, int skipRecords = 0,
+            int takeRecords = 0, bool lazyLoadEnabled = true, params string[] includes)
         {
-            return _repository.GetAll(ref totalRecords, predicate, order, reverse, skipRecords, takeRecords, includes);
+            return _repository.GetAll(ref totalRecords, predicate, order, ascending, skipRecords, takeRecords, lazyLoadEnabled, includes);
         }
     }
 }
